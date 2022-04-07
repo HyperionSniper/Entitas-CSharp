@@ -64,7 +64,7 @@ namespace Entitas.CodeGeneration.Plugins {
         public override CodeGenFile[] Generate(CodeGeneratorData[] data) {
             return data
                 .OfType<ComponentData>()
-                .Where(d => d.ShouldGenerateMethods())
+                .Where(d => d.ShouldGenerateContextMethods())
                 .Where(d => d.IsUnique())
                 .SelectMany(generate)
                 .ToArray();

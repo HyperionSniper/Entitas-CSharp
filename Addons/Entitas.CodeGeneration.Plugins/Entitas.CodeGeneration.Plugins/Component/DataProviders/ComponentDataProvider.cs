@@ -81,7 +81,7 @@ namespace Entitas.CodeGeneration.Plugins {
                             .GetTypes();
 
             var dataFromComponents = types
-                .Where(type => type.ImplementsInterface<IComponent>() || type.ImplementsInterface<IContextComponent>())
+                .Where(type => type.ImplementsInterface<IComponent>())
                 .Where(type => !type.IsAbstract)
                 .Select(createDataForComponent)
                 .ToArray();
