@@ -93,9 +93,7 @@
     <Compile Include="Entitas.CodeGeneration.Plugins\Events\EventData.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\PluginUtil.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Entitas.CodeGeneration.Plugins\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Entitas.CodeGeneration.Attributes\Entitas.CodeGeneration.Attributes.csproj">
       <Project>{76A16CFD-7488-41D3-989B-CA2F1840E638}</Project>
