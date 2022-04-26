@@ -9,6 +9,62 @@ namespace Entitas.CodeGeneration.Plugins {
 
         public override string name { get { return "Component (Entity API)"; } }
 
+#if TYPEDEF_CODEGEN
+        const string TYPEDEF_STANDARD_TEMPLATE =
+           @"public partial class ${EntityType} {
+    public partial class Def {
+        public ${ComponentType} ${validComponentName} { get { return (${ComponentType})_entity.GetComponent(${Index}); } }
+        public bool has${ComponentName} { get { return HasComponent(${Index}); } }
+
+        public void Add${ComponentName}(${newMethodParameters}) {
+            var index = ${Index};
+            var component = (${ComponentType})_entity.CreateComponent(index, typeof(${ComponentType}));
+${memberAssignmentList}
+            _entity.AddComponent(index, component);
+        }
+
+        public void Replace${ComponentName}(${newMethodParameters}) {
+            var index = ${Index};
+            var component = (${ComponentType})_entity.CreateComponent(index, typeof(${ComponentType}));
+${memberAssignmentList}
+            _entity.ReplaceComponent(index, component);
+        }
+
+        public void Remove${ComponentName}() {
+            _entity.RemoveComponent(${Index});
+        }
+    }
+}
+";
+
+        const string TYPEDEF_FLAG_TEMPLATE =
+            @"public partial class ${EntityType} {
+    public partial class Def {
+        static readonly ${ComponentType} ${componentName}Component = new ${ComponentType}();
+
+        public bool ${prefixedComponentName} {
+            get { return HasComponent(${Index}); }
+            set {
+                if (value != ${prefixedComponentName}) {
+                    var index = ${Index};
+                    if (value) {
+                        var componentPool = GetComponentPool(index);
+                        var component = componentPool.Count > 0
+                                ? componentPool.Pop()
+                                : ${componentName}Component;
+
+                        AddComponent(index, component);
+                    } else {
+                        RemoveComponent(index);
+                    }
+                }
+            }
+        }
+    }
+}
+";
+#endif
+
         const string STANDARD_TEMPLATE =
             @"public partial class ${EntityType} {
 

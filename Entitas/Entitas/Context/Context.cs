@@ -4,7 +4,6 @@ using System.Linq;
 using DesperateDevs.Utils;
 
 namespace Entitas {
-
     /// A context manages the lifecycle of entities and groups.
     /// You can create and destroy entities and get groups of entities.
     /// The prefered way to create a context is to use the generated methods

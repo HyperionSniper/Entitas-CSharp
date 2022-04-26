@@ -10,6 +10,22 @@ namespace Entitas.CodeGeneration.Plugins {
         public int priority { get { return 0; } }
         public bool runInDryMode { get { return true; } }
 
+#if TYPEDEF_CODEGEN
+        const string TYPEDEF_TEMPLATE =
+            @"public sealed partial class ${EntityType} : Entitas.DefEntity {
+    private DefBase<${EntityType}> _def;
+    public DefBase<${EntityType}> def {
+        get {
+            if(_def.typeDef == null)
+                return null;
+            else 
+                return _def;
+        }
+    }
+}
+";
+#endif
+
         const string TEMPLATE =
             @"public sealed partial class ${EntityType} : Entitas.Entity {
 }

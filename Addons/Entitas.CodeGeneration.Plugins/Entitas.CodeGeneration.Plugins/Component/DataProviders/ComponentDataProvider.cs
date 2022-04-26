@@ -80,12 +80,14 @@ namespace Entitas.CodeGeneration.Plugins {
                             .GetCachedAssemblyResolver(objectCache, _assembliesConfig.assemblies, _codeGeneratorConfig.searchPaths)
                             .GetTypes();
 
+            // get types which implement IComponent and arent abstract
             var dataFromComponents = types
                 .Where(type => type.ImplementsInterface<IComponent>())
                 .Where(type => !type.IsAbstract)
                 .Select(createDataForComponent)
                 .ToArray();
 
+            // get types which dont implement IComponent and are non-generic, but have context attributes
             var dataFromNonComponents = types
                 .Where(type => !type.ImplementsInterface<IComponent>())
                 .Where(type => !type.IsGenericType)

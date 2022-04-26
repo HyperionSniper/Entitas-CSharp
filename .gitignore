@@ -31,3 +31,9 @@ Build
 Tests/Unity/CodeGenerator/Jenny
 Blueprints.sln
 VisualDebugging.sln
+
+# Builds
+out/
+
+# Converted csprojs
+*.csproj.old

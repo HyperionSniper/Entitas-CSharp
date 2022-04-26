@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace Entitas {
-
     /// Use context.CreateEntity() to create a new entity and
     /// entity.Destroy() to destroy it.
     /// You can add, replace and remove IComponent to an entity.
