@@ -13,14 +13,12 @@ namespace Entitas.CodeGeneration.Plugins {
 #if TYPEDEF_CODEGEN
         const string TYPEDEF_TEMPLATE =
             @"public sealed partial class ${EntityType} : Entitas.DefEntity {
-    private DefBase<${EntityType}> _def;
-    public DefBase<${EntityType}> def {
-        get {
-            if(_def.typeDef == null)
-                return null;
-            else 
-                return _def;
-        }
+    public sealed partial class DefWrapper : DefWrapperBase {
+        public DefWrapper(Entitas.DefEntity entity, Hyperion.Defs.TypeDef typeDef) : base(entity, typeDef) { }
+    }
+
+    protected override DefWrapperBase CreateDefWrapper(Entitas.DefEntity entity, Hyperion.Defs.TypeDef typeDef) {
+        return new DefWrapper(entity, typeDef);
     }
 }
 ";
@@ -40,10 +38,20 @@ namespace Entitas.CodeGeneration.Plugins {
 
         CodeGenFile generate(ContextData data) {
             var contextName = data.GetContextName();
+
+#if TYPEDEF_CODEGEN
+            var fileContent = TYPEDEF_TEMPLATE;
+#else
+            var fileContent = TEMPLATE;
+#endif
+
+            fileContent = fileContent
+                .Replace(contextName);
+
             return new CodeGenFile(
                 contextName + Path.DirectorySeparatorChar +
                 contextName.AddEntitySuffix() + ".cs",
-                TEMPLATE.Replace(contextName),
+                fileContent,
                 GetType().FullName
             );
         }

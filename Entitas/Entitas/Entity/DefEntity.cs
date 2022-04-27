@@ -1,7 +1,8 @@
 ﻿#if TYPEDEF_CODEGEN
-using Hyperion.Defs;
 
 namespace Entitas {
+    using Hyperion.Defs;
+
     public interface IDefEntity : IEntity {
 
     }
@@ -11,17 +12,7 @@ namespace Entitas {
     /// You can add, replace and remove IComponent to an entity.
     /// DefEntities contain wrapper classes for managing components 
     /// created from objects within the TypeDef ecosystem.
-    public abstract class DefEntity<T> : Entity, IDefEntity where T : TypeDef {
-        protected DefWrapperBase _def;
-        public DefWrapperBase def {
-            get
-            {
-                if (_def.typeDef == null)
-                    return null;
-                else
-                    return _def;
-            }
-        }
+    public abstract class DefEntity : Entity, IDefEntity {
 
         // TODO: Def events ?
 
@@ -30,32 +21,65 @@ namespace Entitas {
         /// the entity gets destroyed by the context.
         //public event EntityComponentChanged OnComponentAdded;
 
-        public abstract class DefWrapperBase {
-            TypeDef _typeDef;
-            Entity _entity;
+        private DefWrapperBase _def;
+        public DefWrapperBase def {
+            get {
+                if (_def?.typeDef == null)
+                    return null;
+                else
+                    return _def;
+            }
+            private set { _def = value; }
+        }
 
-            public TypeDef typeDef { get { return _typeDef; } }
+        public bool hasDef => _def?.typeDef != null;
 
-            protected DefWrapperBase(Entity entity, TypeDef typeDef)
-            {
+        public void AddDef(Hyperion.Defs.TypeDef def) {
+            if (hasDef)
+                throw new Entitas.EntitasException("Cannot add TypeDef '" + def.Id + "' to " + this?.ToString() + "!", "You should check if an entity already has the TypeDef before adding it or use entity.ReplaceComponent().");
+
+            _def = CreateDefWrapper(this, def);
+        }
+
+        public void ReplaceDef(Hyperion.Defs.TypeDef def) {
+            _def = CreateDefWrapper(this, def);
+        }
+
+        public void RemoveDef() {
+            _def = null;
+        }
+
+        protected abstract DefWrapperBase CreateDefWrapper(DefEntity entity, TypeDef typeDef);
+
+        public class DefWrapperBase {
+            Hyperion.Defs.TypeDef _typeDef;
+            DefEntity _entity;
+
+            public Hyperion.Defs.TypeDef typeDef { get { return _typeDef; } }
+
+            protected DefWrapperBase(DefEntity entity, Hyperion.Defs.TypeDef typeDef) {
                 _entity = entity;
                 _typeDef = typeDef;
             }
-        }
-    }
 
-
-
-    public sealed partial class _EntityType0<T> : Entitas.DefEntity<T> where T : TypeDef {
-        public sealed partial class DefWrapper : DefWrapperBase {
-            public DefWrapper(Entity entity, TypeDef typeDef) : base(entity, typeDef) { }
-
-        }
-
-        public _EntityType0(TypeDef typeDef)
-        {
-            _def = new T(this, typeDef);
+            // defwrapper will have component access methods added to it 
         }
     }
 }
+
+#if DEBUG
+namespace test {
+public sealed partial class _EntityType0 : Entitas.DefEntity {
+    public sealed partial class DefWrapper : DefWrapperBase {
+        public DefWrapper(Entitas.DefEntity entity, Hyperion.Defs.TypeDef typeDef) : base(entity, typeDef) { }
+
+    }
+
+    protected override DefWrapperBase CreateDefWrapper(Entitas.DefEntity entity, Hyperion.Defs.TypeDef typeDef) {
+        return new DefWrapper(entity, typeDef);
+    }
+}
+}
+#endif
+
 #endif
