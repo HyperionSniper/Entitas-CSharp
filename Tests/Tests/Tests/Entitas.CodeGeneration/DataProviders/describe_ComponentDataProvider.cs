@@ -85,10 +85,10 @@ Entitas.CodeGeneration.Plugins.IgnoreNamespaces = false");
             };
 
             it["gets generate methods"] = () => {
-                data.ShouldGenerateMethods().GetType().should_be(typeof(bool));
-                data.ShouldGenerateMethods().should_be_true();
+                data.ShouldGenerateContextMethods().GetType().should_be(typeof(bool));
+                data.ShouldGenerateContextMethods().should_be_true();
 
-                getData<DontGenerateMethodsComponent>().ShouldGenerateMethods().should_be_false();
+                getData<DontGenerateMethodsComponent>().ShouldGenerateContextMethods().should_be_false();
             };
 
             it["gets flag prefix"] = () => {
@@ -211,7 +211,7 @@ Entitas.CodeGeneration.Plugins.IgnoreNamespaces = false");
 
             it["gets generate index"] = () => { data.ShouldGenerateIndex().should_be_true(); };
 
-            it["gets generate methods"] = () => { data.ShouldGenerateMethods().should_be_true(); };
+            it["gets generate methods"] = () => { data.ShouldGenerateContextMethods().should_be_true(); };
 
             it["gets flag prefix"] = () => { data.GetFlagPrefix().should_be("is"); };
 
