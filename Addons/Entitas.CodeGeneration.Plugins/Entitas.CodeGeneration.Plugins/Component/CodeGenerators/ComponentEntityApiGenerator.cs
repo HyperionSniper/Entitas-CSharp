@@ -120,7 +120,7 @@ ${memberAssignmentList}
         public override CodeGenFile[] Generate(CodeGeneratorData[] data) {
             return data
                 .OfType<ComponentData>()
-                .Where(d => d.ShouldGenerateMethods())
+                .Where(d => d.ShouldGenerateEntityMethods())
                 .SelectMany(generate)
                 .ToArray();
         }

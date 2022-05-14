@@ -16,18 +16,56 @@ ${componentConstantsList}
 
 ${totalComponentsConstant}
 
-    public static readonly string[] componentNames = {
+    private static readonly string[] _componentNames = {
 ${componentNamesList}
     };
 
-    public static readonly System.Type[] componentTypes = {
+    private static readonly System.Type[] _componentTypes = {
 ${componentTypesList}
     };
+
+    static ${Lookup}() { Reset(); }
+
+    private static readonly System.Collections.Generic.Dictionary<System.Type, int> _componentDict = new System.Collections.Generic.Dictionary<System.Type, int>();
+    private static readonly System.Collections.Generic.List<string> _nameBuffer = new System.Collections.Generic.List<string>();
+    private static readonly System.Collections.Generic.List<System.Type> _typeBuffer = new System.Collections.Generic.List<System.Type>();
+
+    public static int TotalComponents { get { return _nameBuffer.Count; } }
+    public static string[] componentNames { get { return _nameBuffer.ToArray(); } }
+    public static System.Type[] componentTypes { get { return _typeBuffer.ToArray(); } }
+
+    public static int GetComponentIndex<T>() where T : Entitas.IComponent {
+        System.Type type = typeof(T);
+
+        return GetComponentIndex(type);
+    }
+
+    public static int GetComponentIndex(System.Type type) {
+        return _componentDict[type];
+    }
+
+    public static void Reset() {
+        for (int i = 0; i < _componentNames.Length; i++) {
+            registerComponentType(_componentNames[i], _componentTypes[i]);
+        }
+    }
+
+    public static void RegisterComponentType<T>() where T : Entitas.IComponent {
+        System.Type type = typeof(T);
+        string componentName = Entitas.Extensions.Typed.ComponentExtension.ComponentName(type);
+        registerComponentType(componentName, type);
+    }
+
+    private static void registerComponentType(string componentName, System.Type type) {
+        _componentDict.Add(type, _nameBuffer.Count);
+        _nameBuffer.Add(componentName);
+        _typeBuffer.Add(type);
+    }
 }
 ";
 
         const string COMPONENT_CONSTANT_TEMPLATE = @"    public const int ${ComponentName} = ${Index};";
-        const string TOTAL_COMPONENTS_CONSTANT_TEMPLATE = @"    public const int TotalComponents = ${totalComponents};";
+        const string TOTAL_COMPONENTS_CONSTANT_TEMPLATE = @"    private const int _totalComponents = ${totalComponents};";
         const string COMPONENT_NAME_TEMPLATE = @"        ""${ComponentName}""";
         const string COMPONENT_TYPE_TEMPLATE = @"        typeof(${ComponentType})";
 
@@ -116,3 +154,47 @@ ${componentTypesList}
         }
     }
 }
+
+//public static class ExampleLookup {
+//    private static readonly string[] _componentNames;
+//    private static readonly System.Type[] _componentTypes;
+
+//    //////
+//    static ExampleLookup() { Reset(); }
+
+//    private static readonly System.Collections.Generic.Dictionary<System.Type, int> _componentDict = new Dictionary<System.Type, int>();
+//    private static readonly System.Collections.Generic.List<string> _nameBuffer = new List<string>();
+//    private static readonly System.Collections.Generic.List<System.Type> _typeBuffer = new List<System.Type>();
+
+//    public static int TotalComponents { get { return _nameBuffer.Count; } }
+//    public static string[] componentNames { get { return _nameBuffer.ToArray(); } }
+//    public static System.Type[] componentTypes { get { return _typeBuffer.ToArray(); } }
+
+//    public static int GetComponentIndex<T>() where T : Entitas.IComponent {
+//        System.Type type = typeof(T);
+
+//        return GetComponentIndex(type);
+//    }
+
+//    public static int GetComponentIndex(System.Type type) {
+//        return _componentDict[type];
+//    }
+
+//    public static void Reset() {
+//        for (int i = 0; i < _componentNames.Length; i++) {
+//            registerComponentType(_componentNames[i], _componentTypes[i]);
+//        }
+//    }
+
+//    public static void RegisterComponentType<T>() where T : Entitas.IComponent {
+//        System.Type type = typeof(T);
+//        string componentName = Entitas.Extensions.Typed.ComponentExtension.ComponentName(type);
+//        registerComponentType(componentName, type);
+//    }
+
+//    private static void registerComponentType(string componentName, System.Type type) {
+//        _componentDict.Add(type, _nameBuffer.Count);
+//        _nameBuffer.Add(componentName);
+//        _typeBuffer.Add(type);
+//    }
+//}

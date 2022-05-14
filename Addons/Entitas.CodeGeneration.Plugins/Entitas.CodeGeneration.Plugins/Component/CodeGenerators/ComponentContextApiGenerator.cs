@@ -8,11 +8,24 @@ namespace Entitas.CodeGeneration.Plugins {
 
         public override string name { get { return "Component (Context API)"; } }
 
+        const string STANDARD_COMPONENT_PROPERTY_TEMPLATE = @"${componentName}Entity.${componentName}";
+        const string INLINED_COMPONENT_PROPERTY_TEMPLATE = @"(${ComponentType})${componentName}Entity.GetComponent(${Index})";
+
+        const string STANDARD_COMPONENT_ADD_TEMPLATE = @"        entity.Add${ComponentName}(${newMethodArgs});";
+        const string INLINED_COMPONENT_ADD_TEMPLATE  = @"        var index = ${Index};
+        var component = (${ComponentType})entity.CreateComponent(index, typeof(${ComponentType}));
+        entity.AddComponent(index, component);";
+
+        const string STANDARD_COMPONENT_REPLACE_TEMPLATE = @"            entity.Replace${ComponentName}(${newMethodArgs});";
+        const string INLINED_COMPONENT_REPLACE_TEMPLATE  = @"            var index = ${Index};
+            var component = (${ComponentType})entity.CreateComponent(index, typeof(${ComponentType}));
+            entity.ReplaceComponent(index, component);";
+
         const string STANDARD_TEMPLATE =
             @"public partial class ${ContextType} {
 
     public ${EntityType} ${componentName}Entity { get { return GetGroup(${MatcherType}.${ComponentName}).GetSingleEntity(); } }
-    public ${ComponentType} ${validComponentName} { get { return ${componentName}Entity.${componentName}; } }
+    public ${ComponentType} ${validComponentName} { get { return ${ComponentProperty}; } }
     public bool has${ComponentName} { get { return ${componentName}Entity != null; } }
 
     public ${EntityType} Set${ComponentName}(${newMethodParameters}) {
@@ -21,7 +34,7 @@ namespace Entitas.CodeGeneration.Plugins {
                 ""You should check if the context already has a ${componentName}Entity before setting it or use context.Replace${ComponentName}()."");
         }
         var entity = CreateEntity();
-        entity.Add${ComponentName}(${newMethodArgs});
+${ComponentAdd}
         return entity;
     }
 
@@ -30,7 +43,7 @@ namespace Entitas.CodeGeneration.Plugins {
         if (entity == null) {
             entity = Set${ComponentName}(${newMethodArgs});
         } else {
-            entity.Replace${ComponentName}(${newMethodArgs});
+${ComponentReplace}
         }
     }
 
@@ -64,7 +77,7 @@ namespace Entitas.CodeGeneration.Plugins {
         public override CodeGenFile[] Generate(CodeGeneratorData[] data) {
             return data
                 .OfType<ComponentData>()
-                .Where(d => d.ShouldGenerateMethods())
+                .Where(d => d.ShouldGenerateContextMethods())
                 .Where(d => d.IsUnique())
                 .SelectMany(generate)
                 .ToArray();
@@ -81,11 +94,19 @@ namespace Entitas.CodeGeneration.Plugins {
                 ? FLAG_TEMPLATE
                 : STANDARD_TEMPLATE;
 
+            bool useInline = !data.ShouldGenerateEntityMethods(); // inline if not generating entity methods
+
+            var fileContent = template
+                .Replace("${ComponentProperty}", useInline ? INLINED_COMPONENT_PROPERTY_TEMPLATE : STANDARD_COMPONENT_PROPERTY_TEMPLATE)
+                .Replace("${ComponentAdd}", useInline ? INLINED_COMPONENT_ADD_TEMPLATE : STANDARD_COMPONENT_ADD_TEMPLATE)
+                .Replace("${ComponentReplace}", useInline ? INLINED_COMPONENT_REPLACE_TEMPLATE : STANDARD_COMPONENT_REPLACE_TEMPLATE)
+                .Replace(data, contextName);
+
             return new CodeGenFile(
                 contextName + Path.DirectorySeparatorChar +
                 "Components" + Path.DirectorySeparatorChar +
                 data.ComponentNameWithContext(contextName).AddComponentSuffix() + ".cs",
-                template.Replace(data, contextName),
+                fileContent,
                 GetType().FullName
             );
         }

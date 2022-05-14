@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using DesperateDevs.Utils;
 using Entitas.CodeGeneration.Attributes;
 
 namespace Entitas.CodeGeneration.Plugins {
@@ -7,10 +8,11 @@ namespace Entitas.CodeGeneration.Plugins {
     public class IsUniqueComponentDataProvider : IComponentDataProvider {
 
         public void Provide(Type type, ComponentData data) {
-            var isUnique = Attribute
-                .GetCustomAttributes(type)
-                .OfType<UniqueAttribute>()
-                .Any();
+            var isUnique = type.ImplementsInterface<IContextComponent>() ||
+                Attribute
+                    .GetCustomAttributes(type)
+                    .OfType<UniqueAttribute>()
+                    .Any();
 
             data.IsUnique(isUnique);
         }
