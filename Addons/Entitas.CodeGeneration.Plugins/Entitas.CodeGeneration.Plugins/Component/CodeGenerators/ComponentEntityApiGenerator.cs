@@ -12,55 +12,13 @@ namespace Entitas.CodeGeneration.Plugins {
 #if TYPEDEF_CODEGEN
         const string TYPEDEF_STANDARD_TEMPLATE =
            @"public partial class ${EntityType} {
-    public partial class Def {
-        public ${ComponentType} ${validComponentName} { get { return (${ComponentType})_entity.GetComponent(${Index}); } }
-        public bool has${ComponentName} { get { return HasComponent(${Index}); } }
-
-        public void Add${ComponentName}(${newMethodParameters}) {
-            var index = ${Index};
-            var component = (${ComponentType})_entity.CreateComponent(index, typeof(${ComponentType}));
-${memberAssignmentList}
-            _entity.AddComponent(index, component);
-        }
-
-        public void Replace${ComponentName}(${newMethodParameters}) {
-            var index = ${Index};
-            var component = (${ComponentType})_entity.CreateComponent(index, typeof(${ComponentType}));
-${memberAssignmentList}
-            _entity.ReplaceComponent(index, component);
-        }
-
-        public void Remove${ComponentName}() {
-            _entity.RemoveComponent(${Index});
-        }
-    }
+${StandardTemplate}
 }
 ";
 
         const string TYPEDEF_FLAG_TEMPLATE =
             @"public partial class ${EntityType} {
-    public partial class Def {
-        static readonly ${ComponentType} ${componentName}Component = new ${ComponentType}();
-
-        public bool ${prefixedComponentName} {
-            get { return HasComponent(${Index}); }
-            set {
-                if (value != ${prefixedComponentName}) {
-                    var index = ${Index};
-                    if (value) {
-                        var componentPool = GetComponentPool(index);
-                        var component = componentPool.Count > 0
-                                ? componentPool.Pop()
-                                : ${componentName}Component;
-
-                        AddComponent(index, component);
-                    } else {
-                        RemoveComponent(index);
-                    }
-                }
-            }
-        }
-    }
+${FlagTemplate}
 }
 ";
 #endif
@@ -132,9 +90,18 @@ ${memberAssignmentList}
         }
 
         CodeGenFile generate(string contextName, ComponentData data) {
-            var template = data.GetMemberData().Length == 0
-                ? FLAG_TEMPLATE
-                : STANDARD_TEMPLATE;
+            bool generateDefComponent = data.IsDefComponent();
+
+            string template;
+            if (generateDefComponent) {
+                template = data.GetMemberData().Length == 0
+                    ? TYPEDEF_FLAG_TEMPLATE
+                    : TYPEDEF_STANDARD_TEMPLATE;
+            } else {
+                template = data.GetMemberData().Length == 0
+                    ? FLAG_TEMPLATE
+                    : STANDARD_TEMPLATE;
+            }
 
             var fileContent = template
                 .Replace("${memberAssignmentList}", getMemberAssignmentList(data.GetMemberData()))
