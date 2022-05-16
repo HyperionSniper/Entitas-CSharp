@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
+    <TargetFramework>net35</TargetFramework>
     <OutputType>Library</OutputType>
     <ReleaseVersion>1.0.0</ReleaseVersion>
     <LangVersion>10</LangVersion>
@@ -16,9 +16,6 @@
     <DefineConstants>TYPEDEF_CODEGEN</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="1Hyperion">
-      <HintPath>..\Libraries\1Hyperion.dll</HintPath>
-    </Reference>
     <Reference Include="DesperateDevs.Utils, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\Libraries\Dependencies\DesperateDevs\DesperateDevs.Utils.dll</HintPath>
     </Reference>

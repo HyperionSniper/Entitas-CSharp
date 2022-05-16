@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
+    <TargetFramework>net35</TargetFramework>
     <OutputType>Exe</OutputType>
     <ReleaseVersion>1.0.0</ReleaseVersion>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>

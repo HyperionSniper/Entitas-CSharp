@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <OutputType>Library</OutputType>
+    <ReleaseVersion>1.0.0</ReleaseVersion>
+    <LangVersion>10</LangVersion>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <ConsolePause>false</ConsolePause>
+    <DefineConstants>$(DefineConstants)TRACE;TYPEDEF_CODEGEN</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <ConsolePause>false</ConsolePause>
+    <DefineConstants>TYPEDEF_CODEGEN</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Entitas\Entitas.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="1Hyperion">
+      <HintPath>..\..\Machina-Rev0\Library\ScriptAssemblies\1Hyperion.dll</HintPath>
+    </Reference>
+    <Reference Include="DesperateDevs.Utils, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\Libraries\Dependencies\DesperateDevs\DesperateDevs.Utils.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+</Project>

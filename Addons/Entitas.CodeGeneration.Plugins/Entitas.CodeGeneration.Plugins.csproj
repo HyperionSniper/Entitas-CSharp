@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
+    <TargetFramework>net35</TargetFramework>
     <OutputType>Library</OutputType>
     <ReleaseVersion>1.0.0</ReleaseVersion>
     <LangVersion>4</LangVersion>
@@ -16,9 +16,6 @@
     <ExternalConsole>true</ExternalConsole>
     <DefineConstants>$(DefineConstants)TRACE;TYPEDEF_CODEGEN</DefineConstants>
   </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="System.CodeDom" Version="6.0.0" />
-  </ItemGroup>
   <ItemGroup>
     <Reference Include="DesperateDevs.Analytics, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\Libraries\Dependencies\DesperateDevs\DesperateDevs.Analytics.dll</HintPath>

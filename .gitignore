@@ -39,3 +39,4 @@ out/
 *.csproj.old
 upgrade-assistant.clef
 
+/pack.bat

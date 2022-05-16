@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
+    <TargetFramework>net35</TargetFramework>
     <OutputType>Library</OutputType>
     <LangVersion>4</LangVersion>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
