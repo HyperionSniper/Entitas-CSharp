@@ -1,10 +1,20 @@
 ﻿#if TYPEDEF_CODEGEN
 
+//namespace Hyperion.Defs {
+//    public class TypeDeff { public string Id;  }
+//}
+
 namespace Entitas {
     using Hyperion.Defs;
 
     public interface IDefEntity : IEntity {
+        bool hasDef { get; }
 
+        Hyperion.Defs.TypeDef typeDef { get; }
+
+        void AddDef(Hyperion.Defs.TypeDef def);
+        void ReplaceDef(Hyperion.Defs.TypeDef def);
+        void RemoveDef();
     }
 
     /// Use context.CreateDefEntity() to create a new entity and
@@ -33,6 +43,7 @@ namespace Entitas {
         }
 
         public bool hasDef => _def?.typeDef != null;
+        public TypeDef typeDef => _def?.typeDef;
 
         public void AddDef(Hyperion.Defs.TypeDef def) {
             if (hasDef)

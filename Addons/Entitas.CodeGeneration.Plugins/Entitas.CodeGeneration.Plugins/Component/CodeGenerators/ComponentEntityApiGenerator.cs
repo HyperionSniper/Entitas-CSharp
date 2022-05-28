@@ -10,15 +10,9 @@ namespace Entitas.CodeGeneration.Plugins {
         public override string name { get { return "Component (Entity API)"; } }
 
 #if TYPEDEF_CODEGEN
-        const string TYPEDEF_STANDARD_TEMPLATE =
+        const string TYPEDEF_TEMPLATE =
            @"public partial class ${EntityType} {
-${StandardTemplate}
-}
-";
-
-        const string TYPEDEF_FLAG_TEMPLATE =
-            @"public partial class ${EntityType} {
-${FlagTemplate}
+${BaseTemplate}
 }
 ";
 #endif
@@ -92,15 +86,15 @@ ${memberAssignmentList}
         CodeGenFile generate(string contextName, ComponentData data) {
             bool generateDefComponent = data.IsDefComponent();
 
-            string template;
-            if (generateDefComponent) {
-                template = data.GetMemberData().Length == 0
-                    ? TYPEDEF_FLAG_TEMPLATE
-                    : TYPEDEF_STANDARD_TEMPLATE;
-            } else {
-                template = data.GetMemberData().Length == 0
+            string template = data.GetMemberData().Length == 0
                     ? FLAG_TEMPLATE
                     : STANDARD_TEMPLATE;
+
+            if (generateDefComponent) {
+                template = template
+                    .ToUnixLineEndings()
+                    .Replace("\n", "\n\t")
+                    .Replace("${BaseTemplate}", template);
             }
 
             var fileContent = template
