@@ -9,14 +9,6 @@ namespace Entitas.CodeGeneration.Plugins {
 
         public override string name { get { return "Component (Entity API)"; } }
 
-#if TYPEDEF_CODEGEN
-        const string TYPEDEF_TEMPLATE =
-           @"public partial class ${EntityType} {
-${BaseTemplate}
-}
-";
-#endif
-
         const string STANDARD_TEMPLATE =
             @"public partial class ${EntityType} {
 
@@ -84,18 +76,9 @@ ${memberAssignmentList}
         }
 
         CodeGenFile generate(string contextName, ComponentData data) {
-            bool generateDefComponent = data.IsDefComponent();
-
             string template = data.GetMemberData().Length == 0
                     ? FLAG_TEMPLATE
                     : STANDARD_TEMPLATE;
-
-            if (generateDefComponent) {
-                template = template
-                    .ToUnixLineEndings()
-                    .Replace("\n", "\n\t")
-                    .Replace("${BaseTemplate}", template);
-            }
 
             var fileContent = template
                 .Replace("${memberAssignmentList}", getMemberAssignmentList(data.GetMemberData()))

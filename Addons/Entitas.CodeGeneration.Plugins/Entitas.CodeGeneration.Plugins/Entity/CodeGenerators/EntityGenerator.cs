@@ -13,13 +13,6 @@ namespace Entitas.CodeGeneration.Plugins {
 #if TYPEDEF_CODEGEN
         const string TYPEDEF_TEMPLATE =
             @"public sealed partial class ${EntityType} : Entitas.DefEntity {
-    public sealed partial class DefWrapper : DefWrapperBase {
-        public DefWrapper(Entitas.DefEntity entity, Hyperion.Defs.TypeDef typeDef) : base(entity, typeDef) { }
-    }
-
-    protected override DefWrapperBase CreateDefWrapper(Entitas.DefEntity entity, Hyperion.Defs.TypeDef typeDef) {
-        return new DefWrapper(entity, typeDef);
-    }
 }
 ";
 #endif
@@ -40,7 +33,13 @@ namespace Entitas.CodeGeneration.Plugins {
             var contextName = data.GetContextName();
 
 #if TYPEDEF_CODEGEN
-            var fileContent = TYPEDEF_TEMPLATE;
+            string fileContent;
+            if (data.IsDefContext()) {
+                fileContent = TYPEDEF_TEMPLATE;
+            }
+            else {
+                fileContent = TEMPLATE;
+            }
 #else
             var fileContent = TEMPLATE;
 #endif

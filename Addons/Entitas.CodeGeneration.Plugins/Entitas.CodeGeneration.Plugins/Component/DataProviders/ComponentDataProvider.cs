@@ -42,7 +42,9 @@ namespace Entitas.CodeGeneration.Plugins {
                 new MemberDataComponentDataProvider(),
                 new ContextsComponentDataProvider(),
                 new IsUniqueComponentDataProvider(),
+#if TYPEDEF_CODEGEN
                 new IsDefComponentDataProvider(),
+#endif
                 new FlagPrefixComponentDataProvider(),
                 new ShouldGenerateComponentComponentDataProvider(),
                 new ShouldGenerateMethodsComponentDataProvider(),

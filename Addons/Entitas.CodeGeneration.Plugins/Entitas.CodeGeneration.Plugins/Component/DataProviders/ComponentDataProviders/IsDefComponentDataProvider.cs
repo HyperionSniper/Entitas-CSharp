@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if TYPEDEF_CODEGEN
+using System;
 
 namespace Entitas.CodeGeneration.Plugins {
     public class IsDefComponentDataProvider : IComponentDataProvider {
@@ -33,3 +34,4 @@ namespace Entitas.CodeGeneration.Plugins {
         }
     }
 }
+#endif
