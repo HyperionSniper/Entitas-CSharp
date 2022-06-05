@@ -7,7 +7,7 @@ namespace Entitas.CodeGeneration.Plugins {
 
     public static class CodeGeneratorExtentions {
 
-        public const string LOOKUP = "ComponentsLookup";
+        public const string LOOKUP = "Lookup";
 
         const string KEYWORD_PREFIX = "@";
 

@@ -45,6 +45,9 @@ ${componentTypesList}
     }
 
     public static void Reset() {
+        _componentDict.Clear();
+        _nameBuffer.Clear();
+        _typeBuffer.Clear();
         for (int i = 0; i < _componentNames.Length; i++) {
             registerComponentType(_componentNames[i], _componentTypes[i]);
         }
@@ -57,6 +60,8 @@ ${componentTypesList}
     }
 
     private static void registerComponentType(string componentName, System.Type type) {
+        if(_componentDict.ContainsKey(type)) return;
+
         _componentDict.Add(type, _nameBuffer.Count);
         _nameBuffer.Add(componentName);
         _typeBuffer.Add(type);
