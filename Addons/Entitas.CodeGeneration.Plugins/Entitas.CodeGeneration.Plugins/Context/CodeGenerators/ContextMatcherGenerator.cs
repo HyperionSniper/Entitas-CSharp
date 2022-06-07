@@ -21,12 +21,20 @@ namespace Entitas.CodeGeneration.Plugins {
           return Entitas.Matcher<${EntityType}>.AllOf(matchers);
     }
 
+    public static Entitas.IAllOfMatcher<${EntityType}> AllOf(params System.Type[] types) {
+        return Entitas.Matcher<${EntityType}>.AllOf(${Lookup}.GetComponentIndices(types));
+    }
+
     public static Entitas.IAnyOfMatcher<${EntityType}> AnyOf(params int[] indices) {
           return Entitas.Matcher<${EntityType}>.AnyOf(indices);
     }
 
     public static Entitas.IAnyOfMatcher<${EntityType}> AnyOf(params Entitas.IMatcher<${EntityType}>[] matchers) {
           return Entitas.Matcher<${EntityType}>.AnyOf(matchers);
+    }
+
+    public static Entitas.IAnyOfMatcher<${EntityType}> AnyOf(params System.Type[] types) {
+          return Entitas.Matcher<${EntityType}>.AnyOf(${Lookup}.GetComponentIndices(types));
     }
 }
 ";

@@ -38,7 +38,8 @@ namespace Entitas {
 
         public void AddDef(Hyperion.Defs.TypeDef def) {
             if (hasDef)
-                throw new Entitas.EntitasException("Cannot add TypeDef '" + def.Id + "' to " + this?.ToString() + "!", "You should check if an entity already has the TypeDef before adding it or use entity.ReplaceComponent().");
+                throw new Entitas.EntityAlreadyHasDefException(def, "Cannot add TypeDef '" + def.Id + "' to " + this?.ToString() + "!",
+                    "You should check if an entity already has the TypeDef before adding it or use entity.ReplaceDef().");
 
             _def = def;
         }

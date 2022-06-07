@@ -41,7 +41,15 @@ ${componentTypesList}
     }
 
     public static int GetComponentIndex(System.Type type) {
+        if(!_componentDict.ContainsKey(type))
+            throw new Entitas.ComponentIsNotRegisteredException(""${ContextName}"", type);
+
         return _componentDict[type];
+    }
+
+    public static int[] GetComponentIndices(System.Type[] types) {
+        return System.Linq.Enumerable.ToArray(
+            System.Linq.Enumerable.Select(types, t => GetComponentIndex(t)));
     }
 
     public static void Reset() {
