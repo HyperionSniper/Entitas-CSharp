@@ -10,4 +10,5 @@ If you download this for yourself, it should work properly, except for the proje
 pack.exe is used as such:
 `pack.exe {replace|replaceT} {target directory containing a folder named Entitas to find/replace dlls} {sln directory to get dlls from}`
  
+Change the 1st parameter to replaceT to run a simulated test run without modifying any files.
  
