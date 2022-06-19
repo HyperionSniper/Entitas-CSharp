@@ -38,5 +38,3 @@ out/
 # Converted csprojs
 *.csproj.old
 upgrade-assistant.clef
-
-/pack.bat

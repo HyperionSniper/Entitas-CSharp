@@ -1,0 +1,1 @@
+pack.exe replace "E:/Projects/Machina-Rev0/Assets/Plugins" "./"
