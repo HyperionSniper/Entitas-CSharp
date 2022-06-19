@@ -19,10 +19,10 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="1Hyperion">
-      <HintPath>..\..\Machina-Rev0\Library\ScriptAssemblies\1Hyperion.dll</HintPath>
+      <HintPath>E:\Projects\Machina-Rev0\Library\ScriptAssemblies\1Hyperion.dll</HintPath>
     </Reference>
     <Reference Include="DesperateDevs.Utils, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\Libraries\Dependencies\DesperateDevs\DesperateDevs.Utils.dll</HintPath>
+      <HintPath>..\Unity\DesperateDevs\DesperateDevs.Utils.dll</HintPath>
     </Reference>
   </ItemGroup>
 </Project>

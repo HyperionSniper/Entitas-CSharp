@@ -8,7 +8,7 @@
   "documentationUrl": "https://github.com/HyperionSniper/Entitas-CSharp/tree/unity-package",
   "dependencies": {
     "com.hyperionsniper.hyperionlib": "0.1.0",
-  }
+  },
   "author": {
     "name": "HyperionSniper"
   }
