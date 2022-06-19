@@ -1,3 +1,4 @@
+
 <p align="center">
     <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/master/Readme/Images/Entitas-Header.png" alt="Entitas">
 </p>
@@ -50,7 +51,8 @@ Entitas is a super fast Entity Component System Framework (ECS) specifically mad
 
 ---
 
-### **[» Download](#download-entitas)**
+## **[» Install as Unity package](#download-entitas)**
+## **[» Download](#download-entitas)**
 ### **[» Documentation][documentation]**
 ### **[» Ask a question][issues-new]**
 ### **[» Wiki and example projects][wiki]**
@@ -141,6 +143,8 @@ Download Entitas
 Each release is published with zip files containing all source files you need.
 
 [Show releases][releases]
+
+To install as a Unity package, add this package to Unity as a git URL with the URL "https://github.com/HyperionSniper/Entitas-CSharp#unity-entitasdefs-package".
 
 
 Thanks to
