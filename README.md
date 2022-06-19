@@ -144,8 +144,7 @@ Each release is published with zip files containing all source files you need.
 
 [Show releases][releases]
 
-To install as a Unity package, add this package to Unity as a git URL with the URL "https://github.com/HyperionSniper/Entitas-CSharp#unity-entitasdefs-package".
-
+To install as a Unity package, first add 1Hyperion.dll to Unity as a Git package with the URL "https://github.com/HyperionSniper/HyperionLib", then add this package with the URL "https://github.com/HyperionSniper/Entitas-CSharp#unity-entitasdefs-package".
 
 Thanks to
 =========
