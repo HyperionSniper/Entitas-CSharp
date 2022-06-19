@@ -1,5 +1,4 @@
-﻿#if TYPEDEF_CODEGEN
-
+﻿
 //namespace Hyperion.Defs {
 //    public class TypeDeff { public string Id;  }
 //}
@@ -68,5 +67,3 @@ namespace Entitas {
 //}
 //}
 //#endif
-
-#endif
