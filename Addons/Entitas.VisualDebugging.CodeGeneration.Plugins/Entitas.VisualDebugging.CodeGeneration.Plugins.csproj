@@ -2,7 +2,7 @@
   <PropertyGroup>
     <TargetFramework>net35</TargetFramework>
     <OutputType>Library</OutputType>
-    <AssemblyName>Entitas.VisualDebugging.CodeGeneration</AssemblyName>
+    <AssemblyName>Entitas.VisualDebugging.CodeGeneration.Plugins</AssemblyName>
     <ReleaseVersion>1.0.0</ReleaseVersion>
     <LangVersion>4</LangVersion>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>

@@ -1,1 +1,1 @@
-pack.exe replace "E:/Projects/Machina-Rev0/Assets/Plugins" "./"
+pack.exe replace "E:/Projects/Machina-Rev0/Assets/Plugins/com.hyperionsniper.entitasdefs@cdc688857f/Libraries" "./"

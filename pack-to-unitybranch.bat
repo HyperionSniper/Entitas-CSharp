@@ -1,0 +1,1 @@
+pack.exe replace "E:/Projects/Entitas-Unity/Entitas-CSharp/Unity" "./"

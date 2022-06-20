@@ -16,7 +16,7 @@ namespace Entitas.CodeGeneration.Plugins {
         return matcher.NoneOf(${Lookup}.GetComponentIndices(types));
     }
 
-    public static Entitas.IAnyOfMatcher<${EntityType}> AnyOf(this Entitas.IAnyOfMatcher<${EntityType}> matcher, params System.Type[] types) {
+    public static Entitas.IAnyOfMatcher<${EntityType}> AnyOf(this Entitas.IAllOfMatcher<${EntityType}> matcher, params System.Type[] types) {
         return matcher.AnyOf(${Lookup}.GetComponentIndices(types));
     }
 }
