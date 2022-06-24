@@ -38,12 +38,31 @@ ${ComponentAdd}
         return entity;
     }
 
+    public ${EntityType} Set${ComponentName}(${ComponentType} ${validComponentName}) {
+        if (has${ComponentName}) {
+            throw new Entitas.EntitasException(""Could not set ${ComponentName}!\n"" + this + "" already has an entity with ${ComponentType}!"",
+                ""You should check if the context already has a ${componentName}Entity before setting it or use context.Replace${ComponentName}()."");
+        }
+        var entity = CreateEntity();
+        entity.AddComponent(${Index}, ${validComponentName});
+        return entity;
+    }
+
     public void Replace${ComponentName}(${newMethodParameters}) {
         var entity = ${componentName}Entity;
         if (entity == null) {
             entity = Set${ComponentName}(${newMethodArgs});
         } else {
 ${ComponentReplace}
+        }
+    }
+
+    public void Replace${ComponentName}(${ComponentType} ${validComponentName}) {
+        var entity = ${componentName}Entity;
+        if (entity == null) {
+            entity = Set${ComponentName}(${validComponentName});
+        } else {
+            entity.ReplaceComponent(${Index}, ${validComponentName});
         }
     }
 
