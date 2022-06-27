@@ -11,9 +11,9 @@ namespace Entitas.CodeGeneration.Plugins {
         public bool runInDryMode { get { return true; } }
 
         const string TEMPLATE =
-            @"public sealed class ${ContextName}Attribute : Entitas.CodeGeneration.Attributes.ContextAttribute {
+            @"public sealed class ${ContextName}ContextAttribute : Entitas.CodeGeneration.Attributes.ContextAttribute {
 
-    public ${ContextName}Attribute() : base(""${ContextName}"") {
+    public ${ContextName}ContextAttribute() : base(""${ContextName}"") {
     }
 }
 ";
@@ -29,7 +29,7 @@ namespace Entitas.CodeGeneration.Plugins {
             var contextName = data.GetContextName();
             return new CodeGenFile(
                 contextName + Path.DirectorySeparatorChar +
-                contextName + "Attribute.cs",
+                contextName + "ContextAttribute.cs",
                 TEMPLATE.Replace(contextName),
                 GetType().FullName
             );

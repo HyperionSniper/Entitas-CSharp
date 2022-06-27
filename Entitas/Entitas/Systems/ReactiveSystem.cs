@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Entitas {
 
@@ -16,11 +17,19 @@ namespace Entitas {
         protected ReactiveSystem(IContext<TEntity> context) {
             _collector = GetTrigger(context);
             _buffer = new List<TEntity>();
+
+            if (_collector == null) {
+                throw new SystemMissingCollectorException($"ReactiveSystem.GetTrigger of ReactiveSystem '{GetType().Name}' returned null!", "You should make sure that ReactiveSystem.GetTrigger returns a non-null ICollector.");
+            }
         }
 
         protected ReactiveSystem(ICollector<TEntity> collector) {
             _collector = collector;
             _buffer = new List<TEntity>();
+
+            if (_collector == null) {
+                throw new SystemMissingCollectorException($"The constructor of ReactiveSystem '{GetType().Name}' was passed a null ICollector!", "You should make sure that the constructor is passed a non-null ICollector.");
+            }
         }
 
         /// Specify the collector that will trigger the ReactiveSystem.
