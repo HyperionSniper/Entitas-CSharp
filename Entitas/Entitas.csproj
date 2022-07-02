@@ -25,4 +25,7 @@
       <LogicalName>version.txt</LogicalName>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Entitas\Systems\Attributes\" />
+  </ItemGroup>
 </Project>
